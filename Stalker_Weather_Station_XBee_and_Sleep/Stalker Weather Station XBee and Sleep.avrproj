@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--This file is meant to be opened with AVR Project IDE, http://code.google.com/p/avr-project-ide/ -->
+<Project>
+  <DirPath>C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep</DirPath>
+  <HasBeenConfigged>true</HasBeenConfigged>
+  <Device>atmega328p</Device>
+  <ClockFreq>8000000.00</ClockFreq>
+  <LinkerOpt />
+  <OtherOpt>-Wall -gdwarf-2</OtherOpt>
+  <OtherOptionsForC>-std=gnu99</OtherOptionsForC>
+  <OtherOptionsForCPP>-std=c99</OtherOptionsForCPP>
+  <OtherOptionsForS />
+  <OutputDir>output</OutputDir>
+  <Optimization>-Os</Optimization>
+  <UseInitStack>false</UseInitStack>
+  <InitStackAddr>0xFFFF</InitStackAddr>
+  <PackStructs>true</PackStructs>
+  <ShortEnums>true</ShortEnums>
+  <UnsignedBitfields>true</UnsignedBitfields>
+  <UnsignedChars>true</UnsignedChars>
+  <FunctionSections>true</FunctionSections>
+  <DataSections>true</DataSections>
+  <IncludeDirList />
+  <LibraryDirList />
+  <LinkObjList />
+  <LinkLibList>
+    <Lib>libm.a</Lib>
+    <Lib>libc.a</Lib>
+  </LinkLibList>
+  <MemorySegList />
+  <BurnPart>atmega328p</BurnPart>
+  <BurnProgrammer>stk500v1</BurnProgrammer>
+  <BurnOptions>-F</BurnOptions>
+  <BurnPort />
+  <BurnFuseBox>-U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xf8:m</BurnFuseBox>
+  <BurnBaud>57600</BurnBaud>
+  <BurnAutoReset>true</BurnAutoReset>
+  <LastFile>Stalker Weather Station XBee and Sleep.pde</LastFile>
+  <FileList>
+    <File>
+      <!--AbsPath: 'C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep\Stalker Weather Station XBee and Sleep.pde'-->
+      <RelPath>Stalker Weather Station XBee and Sleep.pde</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>3827</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep\R8025.cpp'-->
+      <RelPath>R8025.cpp</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep\TMP102.cpp'-->
+      <RelPath>TMP102.cpp</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep\R8025.h'-->
+      <RelPath>R8025.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>1576</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\zakiem\Documents\Development\Arduino\Projects\Stalker Weather Station XBee and Sleep\TMP102.h'-->
+      <RelPath>TMP102.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+  </FileList>
+  <ArduinoCoreOverride />
+  <AVRStudioXMLStuff />
+</Project>
