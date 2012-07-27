@@ -135,7 +135,7 @@ short bmp085GetTemperature(unsigned int ut)
   x2 = ((long)mc << 11)/(x1 + md);
   b5 = x1 + x2;
 
-  return (((b5 + 8)>>4)/10);  
+  return (((b5 + 8)>>4));  
 }
 
 // Calculate pressure given up
@@ -171,7 +171,7 @@ long bmp085GetPressure(unsigned long up)
   x2 = (-7357 * p)>>16;
   p += (x1 + x2 + 3791)>>4;
   
-  return (p/1000);
+  return (p);
 }
 
 // Read 1 byte from the BMP085 at 'address'
