@@ -1,8 +1,6 @@
 #include <dht.h>
 dht DHT;  
-
 #define DHT22_PIN 2
-
 #include <Wire.h>
 #define BMP085_ADDRESS 0x77  // I2C address of BMP085
 
@@ -24,7 +22,6 @@ int md;
 // b5 is calculated in bmp085GetTemperature(...), this variable is also used in bmp085GetPressure(...)
 // so ...Temperature(...) must be called before ...Pressure(...).
 long b5; 
-
 short temperature;
 long pressure;
 
@@ -34,77 +31,21 @@ void setup()
   Wire.begin();
   bmp085Calibration();
   Serial.begin(115200);
-  //Serial.println("DHT TEST PROGRAM");
-  //Serial.print("LIBRARY VERSION: ");
-  //Serial.println(DHT_LIB_VERSION);
-  //Serial.println();
-  //Serial.println("Type, Humidity (%), Temperature (C), Pressure (kPa)");
 }
 
-void loop()
-{
+void loop() {
   // READ DATA
-  //Serial.print("DHT22, \t");
   float chk = DHT.read22(DHT22_PIN);
-  /*switch (chk)
-  {
-    case DHTLIB_OK:  
-                Serial.print("OK,\t");
-                break;
-    case DHTLIB_ERROR_CHECKSUM:
-                Serial.print("Checksum error,\t");
-                break;
-    case DHTLIB_ERROR_TIMEOUT:
-                Serial.print("Time out error,\t");
-                break;
-    default:
-                Serial.print("Unknown error,\t");
-                break; 
-  }*/ 
+ 
   // DISPLAY DATA
   Serial.print((DHT.humidity)/100, 2);
   Serial.print(", ");
-  //Serial.println(DHT.temperature, 0);
-
-  delay(1000);
-
-  // READ DATA
-  //Serial.print("DHT11, \t");
-
-  /*switch (chk)
-  {
-    case DHTLIB_OK:  
-                Serial.print("OK,\t");
-                break;
-    case DHTLIB_ERROR_CHECKSUM:
-                Serial.print("Checksum error,\t");
-                break;
-    case DHTLIB_ERROR_TIMEOUT:
-                Serial.print("Time out error,\t");
-                break;
-    default:
-                Serial.print("Unknown error,\t");
-                break;
-  }*/
- // DISPLAT DATA
-  //Serial.print(DHT.humidity,1);
-  //Serial.print(",\t");
-  //Serial.println(DHT.temperature,1);
-
-  //delay(1000);
-  
   temperature = bmp085GetTemperature(bmp085ReadUT());
   pressure = bmp085GetPressure(bmp085ReadUP());
-  //Serial.print("Temperature: ");
   Serial.print(temperature, DEC);
-  //Serial.println(" *0.1 deg C");
-  //Serial.print("Pressure: ");
-  //Serial.println();
   Serial.print(", "); 
   Serial.println(pressure, DEC);
-  //Serial.println(" *0.001 kPa");
   delay(1000);
-   
 }
 
 // Stores all of the bmp085's calibration values into global variables
