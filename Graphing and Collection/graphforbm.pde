@@ -4,57 +4,67 @@ String inBuffer = "";
 float Humidity = 0;
 float Temperature = 0; 
 float Pressure = 0;
-int dataCount = 1; 
+int dataCount = 1; // Setting dataCount to 1 will tell the computer when to start reading the data 
 int loopCount = 0; 
+
+PFont font;
 
 boolean first_comm = true;
 
-float[] dat = new float[625]; // make an array of data coming over serial 
-float[] Humidity_array = new float[625]; 
-int[] Temperature_array = new int[625];
+float[] dat = new float[625]; // Make an array of data coming over serial 
+float[] Humidity_array = new float[625]; //Make a seperate array for each Weather section
+int[] Temperature_array = new int[625];// (i.e. Humidity, Temperature, and Pressure, etc.)
 int[] Pressure_array = new int[625];
 
-PFont font; 
+String filePath = "/Users/akhil/Desktop/graphforbm/logs/log-" + year() + month() + day() + hour() + minute() + second() + ".csv"; 
 
 void setup() {
   size(1024, 768);
   String portName = Serial.list()[0];
   myPort = new Serial(this, portName, 115200);
-  delay(500); 
-  myPort.bufferUntil ('\n');
+  delay(500); //Let remote system boot 
+  
+  myPort.bufferUntil ('\n'); //Then wait till we've received our first valid string of data
   smooth();
   font = loadFont("Times-Roman-22.vlw");
   textFont(font);
   frameRate(10);
+  
+  String[] csv_title = {"Year,Month,Day,Hour,Minute,Seconds,Humidity,Temperature,Pressure"}; //Write to a CSV File!
+  appendToFile(filePath, csv_title); 
 }
 
 void serialEvent(Serial myPort) {
-  int start = 0; //where to start reading the data
+  int start = 0; //Where to start reading the data
   if (first_comm == true)
     {
       start = 4;
       first_comm = false;
     }
    inBuffer = myPort.readStringUntil('\n');
-   inBuffer = inBuffer.substring(0, inBuffer.length()- 1);
-   dat = float(split(inBuffer, ',')); //parse dat into a string of numbers 
+   inBuffer = inBuffer.substring(0, inBuffer.length()- 1); //Remove new line from the end
+   dat = float(split(inBuffer, ',')); //Parse dat into a string of numbers 
    dataCount ++;
-   if (dataCount > 3) //after first set of invalid data, display data
+   if (dataCount > 3) //After first set of invalid data, display data as values
    { 
       Humidity = (dat[0]*100); 
       Temperature = (dat[1]/10);
       Pressure = (dat[2]/1000);
     }
+    
+    //Write to a CSV File!
+  String[] csv_data ={year() + "," + month() + "," + day() + "," + hour() + "," + minute() + "," + second() + "," + Humidity + "," + Temperature + "," + Pressure};
+  appendToFile(filePath, csv_data);
   }
 
 void draw() {
   background(255);
   fill(0);
-  if (dataCount == 3) //ignored first set of invalid data
+  if (dataCount == 3) //Ignored first set of invalid data
     { 
       for (int i = 0; i<dat.length;i++)
         {
-          dat[i] = 0;
+          dat[i] = 0; 
         }
     } 
   //Axes Labels
@@ -99,7 +109,7 @@ void draw() {
   textSize(14);
   text("Humidity:" + " " + Humidity + "%", 800, 400);
   text("Temperature:" + " " + Temperature + "\u00B0C", 800, 430);
-  text("Pressure:" + " " + Pressure + " kPa", 800, 460);
+  text("Pressure:" + " " + Pressure + "kPa", 800, 460);
 
   //Grid Lines
   for (int i = 0 ;i<=width/18.75;i++)
@@ -111,26 +121,28 @@ void draw() {
     }
     
   //Humidity Line 
-  float var_scale_h = map(Humidity, 0, 100, 768, 100); //scale Humidity values for the y-axis of graph 
+  //(0% to 100%)
+  float var_scale_h = map(Humidity, 0, 100, 768, 100); //Scale Humidity values for the y-axis of the graph 
   noFill();
   stroke(109, 207, 71);
   strokeWeight(5);
-  if (dataCount > 3) 
+  if (dataCount > 3) //After first set of invalid data, start graphing
     {
     beginShape(); 
     for (int i = 0; i<Humidity_array.length;i++)
       {
-        vertex(i, Humidity_array[i]);
+        vertex(i, Humidity_array[i]);  
       }
     endShape();
     for (int i = 1; i<Humidity_array.length;i++)
       {
-        Humidity_array[i-1] = Humidity_array[i];
+        Humidity_array[i-1] = Humidity_array[i]; //New array value will be the one after it  
       }
-    Humidity_array[Humidity_array.length-1]= int(var_scale_h); 
+    Humidity_array[Humidity_array.length-1]= int(var_scale_h); //set last value to scaled value of Humidity  
 
   //Temperature Line
-    float var_scale_t = map(Temperature, -30, 45, 768, 100);
+  //(-30 degrees to 45 degrees)
+    float var_scale_t = map(Temperature, -30, 45, 768, 100); //Scale Temperature values for the y-axis of the graph
     noFill();
     stroke(109, 41, 71);
     strokeWeight(5);
@@ -144,10 +156,11 @@ void draw() {
       {
         Temperature_array[i-1] = Temperature_array[i];
       }
-    Temperature_array[Temperature_array.length-1]= int(var_scale_t);
+    Temperature_array[Temperature_array.length-1]= int(var_scale_t); 
 
   //Pressure Line
-  float var_scale_p = map(Pressure, 89.5, 110, 768, 100);
+  //(89kPa to 111kPa)
+  float var_scale_p = map(Pressure, 89.5, 110, 768, 100); //Scale Pressure values for the y-axis of the graph
   noFill();
   stroke(37, 87, 223);
   strokeWeight(5);
@@ -161,8 +174,34 @@ void draw() {
     {
       Pressure_array[i-1] = Pressure_array[i];
     }
-    Pressure_array[Pressure_array.length-1]=int(var_scale_p);
-    loopCount ++;
+    Pressure_array[Pressure_array.length-1]=int(var_scale_p); 
+    loopCount ++; 
+  }
+}
+
+//http://forum.processing.org/topic/log-data-on-a-csv-file-is-it-possible
+void appendToFile(String filePath, String[] dat)
+{
+  PrintWriter pw = null;
+  try
+  {
+    pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true))); // true means: "append"
+    for (int i = 0; i < dat.length; i++)
+    {
+      pw.println(dat[i]);
+    }
+  }
+  catch (IOException e)
+  {
+    // Report problem or handle it
+    e.printStackTrace();
+  }
+  finally
+  {
+    if (pw != null)
+    {
+      pw.close();
+    }
   }
 }
 
