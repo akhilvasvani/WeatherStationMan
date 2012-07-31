@@ -8,14 +8,17 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
 I programmed this WeatherStationMan using a Mac and in Arduino0022. Although I used an older version of Arduino, the libraries can be used with the most up-to-date version of Arduino. 
 
-Code:
-This is the code that is loaded on to Seeduino Stalker v2.3. It gathers data via the DHT22 sensor and BMP085 sensor, and sends it wirelessly over Xbee to the computer. 
+Arduino Code:
+This is the code that is loaded on to Seeduino Stalker v2.3. It gathers data via the DHT22 sensor and BMP085 sensor, and sends it wirelessly over XBee to the computer. 
 
 Graphing and Collection:
 This is the script for performing automatic data acquisition from the DHT22 and BMP085 sensors.
 
 Libraries:
 The above folder contains the drivers (not already installed on Arduino) needed for this project. 
+
+Boards:
+The above folder contains the driver (not already installed on Arduino) needed for this project.
 
 ToubleShooting:
 "RXTX version mismatch on a Macbook pro -- nothing seems to solve this problem"
@@ -41,4 +44,3 @@ More info is available at http://jeremyblum.com/2011/05/14/msp430-wireless-weath
 
 HelioWatcher code was written Jeremy E. Blum
 More info is available at https://github.com/sciguy14/HelioWatcher
-
