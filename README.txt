@@ -8,6 +8,8 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
 I programmed this WeatherStationMan using a Mac and in Arduino0022. Although I used an older version of Arduino, the libraries can be used with the most up-to-date version of Arduino. 
 
+Check out my github page for more information: http://akhilvasvani.github.com/WeatherStationMan/
+
 Arduino Code:
 This is the code that is loaded on to Seeduino Stalker v2.3. It gathers data via the DHT22 sensor and BMP085 sensor, and sends it wirelessly over XBee to the computer. 
 
@@ -27,7 +29,6 @@ More info is available at https://forum.processing.org/topic/rxtx-version-mismat
 "What is wrong? parsing serial data with split()"
 More info is available at https://forum.processing.org/topic/what-is-wrong-parsing-serial-data-with-split
 
-Check out my github page for more information: http://akhilvasvani.github.com/WeatherStationMan/
 
 Credits:
 In the Arduino 'Code' file, I referenced a couple of example codes: 
