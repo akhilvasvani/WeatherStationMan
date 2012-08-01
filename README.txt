@@ -29,7 +29,6 @@ More info is available at https://forum.processing.org/topic/rxtx-version-mismat
 "What is wrong? parsing serial data with split()"
 More info is available at https://forum.processing.org/topic/what-is-wrong-parsing-serial-data-with-split
 
-
 Credits:
 In the Arduino 'Code' file, I referenced a couple of example codes: 
 BMP085 example code was written by Jimbo 
