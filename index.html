@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Weatherstationman by akhilvasvani</title>
+    <title>WeatherStationMan by akhilvasvani</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -17,8 +17,8 @@
   <body>
 
       <header>
-        <h1>Weatherstationman</h1>
-        <p>Sensors- attached to the Seeduino Stalker v2.3- monitor humidity, temperature, and pressure; they send that data over XBee to the computer. A processing script graph interprets the data and saves it into a .csv file with the local time and date.</p>
+        <h1>WeatherStationMan</h1>
+        <p>Sensors--attached to the Seeduino Stalker v2.3-- monitor humidity, temperature, and pressure; they send that data over XBee to the computer. A processing script graph interprets the data and saves it into a csv file with the local time and date.</p>
       </header>
 
       <div id="banner">
@@ -39,32 +39,114 @@
         <ul></ul>
       </nav>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <p>The WeatherStationMan is a wireless outdoor Arduino weather station that logs and graphs humidity, temperature, and pressure. This project requires no external power for outdoor sensors (it's solar powered), wirelessly communicates between sensors and computer (either Mac or PC), logs the data, and is relatively inexpensive and easy to build. </p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h1>Building Materials:</h1>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<ul>
+<li>Seeduino Stalker v2.3 </li>
+<li>Solar panel for powering the outdoor sensor</li>
+<li>A LiPo battery of 1000mAH </li>
+<li>DHT22 Humidity sensor </li>
+<li>BMP085 Barometric pressure sensor </li>
+<li>A 10K Resistor</li>
+<li>2x XBee series 2 modules </li>
+<li>XBee Explorer </li>
+<li>Jumper wires</li>
+<li>USB Cable to connect PC to XBee Explorer</li>
+<li>Small solder-less bread-board to hook up the two sensors above (for debugging purposes), but then I used 21 x 19 Proto board</li>
+<li>An FTDI board, 3.3V (to debug information from the stalker board)</li>
+</ul><h2>Software:</h2>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<ul>
+<li>Download <a href="http://arduino.cc/en/Main/Software">Arduino</a> (I used the version 0022, but my code can work for the newer Arduino version)</li>
+<li>Download <a href="http://www.digi.com/support/productdetail?pid=4624&amp;osvid=0&amp;type=utilities">X-CTU</a> (for configuring the XBee modules on PC) or <a href="http://freeware.the-meiers.org/">CoolTerm</a> (for configuring the XBee modules on Mac) </li>
+<li>Download <a href="http://www.processing.org/download/">Processing</a> (tool to read graph) </li>
+<li>Download <a href="http://www.ftdichip.com/Drivers/VCP.htm">drivers</a> (if your computer cannot find drivers use the website to download them)</li>
+</ul><h3>Other Tools:</h3>
 
-<h3>Designer Templates</h3>
+<ul>
+<li>Soldering Iron</li>
+<li>Saw</li>
+</ul><p><strong>Disclaimer:
+I built this project as something to do in my spare time and not as a product. I did not include any other languages support besides English. I used only Celsius temperatures (it can modified to record Fahrenheit temperature if need be), and once again this a recreational project and NOT a product.</strong></p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h4>Overview to build the WeatherStationMan</h4>
 
-<h3>Rather Drive Stick?</h3>
+<ol>
+<li>Connect all the sensors to the Stalker/Arduino board<br>
+</li>
+<li>Configure the XBee modules</li>
+<li>Load Arduino code onto the Stalker</li>
+<li>Run graphing program on the computer</li>
+<li>Last-minute modifications </li>
+</ol><h5>Connecting the Sensors:</h5>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ol>
+<li>Connect the DHT22 sensor to breadboard, which is connected via Jumper wires to the Stalker Board
 
-<h3>Authors and Contributors</h3>
+<ul>
+<li>DHT22 is connected to digital pin 2 of Stalker board</li>
+<li>DHT22 Pin 1 to 3.3 Volt of Stalker board</li>
+<li>DHT22 Pin 4 to GND of Stalker board</li>
+<li>DHT22 Pin 2 to digital pin 2 of Stalker board</li>
+<li>10KOhm resistor between pin 1 (Vcc) to pin 2 (data) of the sensor</li>
+<li>DHT22 Pin 3 is left not connected.</li>
+</ul>
+</li>
+<li>Connect the BMP085 sensor to the breadboard, which is connected via Jumper wires to the Stalker Board
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<ul>
+<li>BMP085 is connected to the I2C interface (analog pins 4 and 5 of the Stalker Board).</li>
+<li>Vcc from sensor breakout board to 3.3V of Stalker board</li>
+<li>Gnd from sensor breakout board to GND of Stalker board</li>
+<li>SDA from sensor breakout board to Stalker board analog pin 4</li>
+<li>SCL from sensor breakout board to Stalker board analog pin 5</li>
+</ul>
+</li>
+</ol><h6>Configuring the XBee modules:</h6>
 
-<h3>Support or Contact</h3>
+<ol>
+<li>Install the X-CTU utility (or CoolTerm if you're using Mac) and Drivers</li>
+<li>Connect XBee with USB to computer and run CoolTerm </li>
+<li>Configure one unit to be coordinator and another to be endpoint</li>
+<li>Place the XBee module configured as endpoint into the Stalker socket</li>
+<li>Place the XBee module configured as coordinator into the XBeeExplorer and connect it to the computer</li>
+<li>Optional: Do firmware upgrade to the XBee Modules 
+More information for <a href="http://ashleyhughesarduino.wordpress.com/2012/01/03/new-easier-xbee-for-mac-lion-os-x-10-7-with-arduino/">Mac</a>
+More information for <a href="http://www.instructables.com/id/Changing-Xbee-Baud-Rates/?ALLSTEPS">PC</a>
+</li>
+</ol><h6># Loading Arduino code onto the Stalker board:</h6>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<ol>
+<li>Copy the Boards code into the Boards notepad/textEdit document, which is located inside the arduino folder (inside hardware folder) in the Arduino program (arduino folder is located in users/ "your username" /Arduino/Contents/Resources/Java/hardware/arduino/)</li>
+<li>Connect FTDI board on the Stalker (for debugging purposes)</li>
+<li>Connect the USB Cable from the FTDI board to the computer </li>
+<li>Add the Libraries DHT22, BMP085, and Battery into the user libraries of your Arduino (libraries folder is located in users/ "your username" /Arduino/Contents/Resources/Java/libraries)</li>
+<li>Place the code for the Stalker into your development area </li>
+<li>Compile and load the program onto the Stalker</li>
+<li>Remove USB cable and connect XBee module </li>
+</ol><h6># Running graphing program on the computer:</h6>
+
+<ol>
+<li>(For Mac) Copy certain libraries from the Arduino program into Processing (Copy RXTXcomm.jar and librxtxSerial.jnilib from Arduino (found in users/ "your username" /Arduino/Contents/Resources/Java) into Processing (where to place the RXTXcomm.jar copy: users/ "your username" /Processing/Contents/Resources/Java/modes/java/libraries/serial/library/) (where to place the librxtxSerial.jnilib copy: users/ "your username" /Processing/Contents/Resources/Java/modes/java/libraries/serial/library/macosx)</li>
+<li>Place the code for the graph into the development area</li>
+<li>Connect battery and solar charger to the Stalker </li>
+<li>Plug the other XBee module into the computer with the USB cable</li>
+<li>Run the program and graph </li>
+</ol><h6>## Last-minute modifications:</h6>
+
+<ol>
+<li>Remove the bread board and solder the jumpers wire through a proto board</li>
+<li>Put an enclosure around weather station </li>
+</ol><p>Last, but not least, enjoy the weather!</p>
+
+<p>Notes: </p>
+
+<ul>
+<li><p>You need to place the outdoor unit somewhere where direct sunlight does occur from time to time, otherwise if there is too much sunlight, temperatures reading will be very high, especially in the summer. In addition, after 1 hour of direct sunlight the battery should be fully charged. </p></li>
+<li><p>There is a log file that saves the data every day. If you want you can modify the data, so that you receive data every 30 minutes or longer instead of every second. </p></li>
+</ul>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/akhilvasvani">akhilvasvani</a></p>
