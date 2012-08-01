@@ -18,7 +18,7 @@
 
       <header>
         <h1>WeatherStationMan</h1>
-        <p>Sensors--attached to the Seeduino Stalker v2.3-- monitor humidity, temperature, and pressure; they send that data over XBee to the computer. A processing script graph interprets the data and saves it into a csv file with the local time and date.</p>
+        <p>Wireless outdoor weather station that logs and graphs data.</p>
       </header>
 
       <div id="banner">
@@ -46,10 +46,10 @@
 <ul>
 <li>Seeduino Stalker v2.3 </li>
 <li>Solar panel for powering the outdoor sensor</li>
-<li>A LiPo battery of 1000mAH </li>
+<li>LiPo battery of 1000mAH </li>
 <li>DHT22 Humidity sensor </li>
 <li>BMP085 Barometric pressure sensor </li>
-<li>A 10K Resistor</li>
+<li>10K Resistor</li>
 <li>2x XBee series 2 modules </li>
 <li>XBee Explorer </li>
 <li>Jumper wires</li>
@@ -116,7 +116,7 @@ I built this project as something to do in my spare time and not as a product. I
 More information for <a href="http://ashleyhughesarduino.wordpress.com/2012/01/03/new-easier-xbee-for-mac-lion-os-x-10-7-with-arduino/">Mac</a>
 More information for <a href="http://www.instructables.com/id/Changing-Xbee-Baud-Rates/?ALLSTEPS">PC</a>
 </li>
-</ol><h6># Loading Arduino code onto the Stalker board:</h6>
+</ol><h6> Loading Arduino code onto the Stalker board:</h6>
 
 <ol>
 <li>Copy the Boards code into the Boards notepad/textEdit document, which is located inside the arduino folder (inside hardware folder) in the Arduino program (arduino folder is located in users/ "your username" /Arduino/Contents/Resources/Java/hardware/arduino/)</li>
@@ -126,7 +126,7 @@ More information for <a href="http://www.instructables.com/id/Changing-Xbee-Baud
 <li>Place the code for the Stalker into your development area </li>
 <li>Compile and load the program onto the Stalker</li>
 <li>Remove USB cable and connect XBee module </li>
-</ol><h6># Running graphing program on the computer:</h6>
+</ol><h6> Running graphing program on the computer:</h6>
 
 <ol>
 <li>(For Mac) Copy certain libraries from the Arduino program into Processing (Copy RXTXcomm.jar and librxtxSerial.jnilib from Arduino (found in users/ "your username" /Arduino/Contents/Resources/Java) into Processing (where to place the RXTXcomm.jar copy: users/ "your username" /Processing/Contents/Resources/Java/modes/java/libraries/serial/library/) (where to place the librxtxSerial.jnilib copy: users/ "your username" /Processing/Contents/Resources/Java/modes/java/libraries/serial/library/macosx)</li>
@@ -134,7 +134,7 @@ More information for <a href="http://www.instructables.com/id/Changing-Xbee-Baud
 <li>Connect battery and solar charger to the Stalker </li>
 <li>Plug the other XBee module into the computer with the USB cable</li>
 <li>Run the program and graph </li>
-</ol><h6>## Last-minute modifications:</h6>
+</ol><h6> Last-minute modifications:</h6>
 
 <ol>
 <li>Remove the bread board and solder the jumpers wire through a proto board</li>
