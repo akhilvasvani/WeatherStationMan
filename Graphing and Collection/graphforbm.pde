@@ -1,19 +1,21 @@
 import processing.serial.*;
 Serial myPort;
 String inBuffer = "";
+float Battery_voltage = 0;
 float Humidity = 0;
 float Temperature = 0; 
 float Pressure = 0;
 int dataCount = 1; // Setting dataCount to 1 will tell the computer when to start reading the data 
-int loopCount = 0; 
+
 
 PFont font;
 
 boolean first_comm = true;
 
 float[] dat = new float[625]; // Make an array of data coming over serial 
-float[] Humidity_array = new float[625]; //Make a seperate array for each Weather section
-int[] Temperature_array = new int[625];// (i.e. Humidity, Temperature, and Pressure, etc.)
+float[] Battery_voltage_array = new float[625]; //Make a seperate array for each Weather section
+float[] Humidity_array = new float[625];// (i.e. Battery voltage, Humidity, Temperature, and Pressure, etc.)
+int[] Temperature_array = new int[625];
 int[] Pressure_array = new int[625];
 
 String filePath = "/Users/akhil/Desktop/graphforbm/logs/log-" + year() + month() + day() + hour() + minute() + second() + ".csv"; 
@@ -30,7 +32,7 @@ void setup() {
   textFont(font);
   frameRate(10);
   
-  String[] csv_title = {"Year,Month,Day,Hour,Minute,Seconds,Humidity,Temperature,Pressure"}; //Write to a CSV File!
+  String[] csv_title = {"Year,Month,Day,Hour,Minute,Seconds,Battery Voltage,Humidity,Temperature,Pressure"}; //Write to a CSV File!
   appendToFile(filePath, csv_title); 
 }
 
@@ -45,22 +47,23 @@ void serialEvent(Serial myPort) {
    inBuffer = inBuffer.substring(0, inBuffer.length()- 1); //Remove new line from the end
    dat = float(split(inBuffer, ',')); //Parse dat into a string of numbers 
    dataCount ++;
-   if (dataCount > 3) //After first set of invalid data, display data as values
+   if (dataCount > 4) //After first set of invalid data, display data as values
    { 
-      Humidity = (dat[0]*100); 
-      Temperature = (dat[1]/10);
-      Pressure = (dat[2]/1000);
+      Battery_voltage = ((dat[0]*5)/1024)-1;
+      Humidity = dat[1]; 
+      Temperature = (dat[2]/10);
+      Pressure = (dat[3]/1000);
     }
     
-    //Write to a CSV File!
-  String[] csv_data ={year() + "," + month() + "," + day() + "," + hour() + "," + minute() + "," + second() + "," + Humidity + "," + Temperature + "," + Pressure};
+  //Write to a CSV File!
+  String[] csv_data ={year() + "," + month() + "," + day() + "," + hour() + "," + minute() + "," + second() + "," + Battery_voltage + "," + Humidity + "," + Temperature + "," + Pressure};
   appendToFile(filePath, csv_data);
   }
 
 void draw() {
-  background(255);
+  background(200);
   fill(0);
-  if (dataCount == 3) //Ignored first set of invalid data
+  if (dataCount == 4) //Ignored first set of invalid data
     { 
       for (int i = 0; i<dat.length;i++)
         {
@@ -69,17 +72,18 @@ void draw() {
     } 
   //Axes Labels
   textSize(14);
-  text("0,-30\u00B0, 88.1", 2, 755);
-  text("9, -23.25\u00B0, 90.2", 2, 700);
-  text("15, -18\u00B0, 91.6", 2, 660);
-  text("28, -9\u00B0, 94.4", 2, 580);
-  text("40, 0\u00B0, 97.2", 2, 500);
-  text("52, 9\u00B0, 100", 2, 420);
-  text("64, 18\u00B0, 102.8", 2, 340);
-  text("76, 27\u00B0, 105.6", 2, 260);
-  text("82, 31.5\u00B0, 107", 2, 220);
-  text("100, 45\u00B0, 111.2", 2, 100);
-  text("Humidity (%), Temperature (C), Pressure (kPa)", 2, 65);
+  text("0, 0, -30\u00B0, 88.1", 2, 755);
+  text("0.455, 9, -23.25\u00B0, 90.2", 2, 700);
+  text("0.757, 15, -18\u00B0, 91.6", 2, 660);
+  text("1.364, 28, -9\u00B0, 94.4", 2, 580);
+  text("1.97, 40, 0\u00B0, 97.2", 2, 500);
+  text("2.576, 52, 9\u00B0, 100", 2, 420);
+  text("3.182, 64, 18\u00B0, 102.8", 2, 340);
+  text("3.789, 76, 27\u00B0, 105.6", 2, 260);
+  text("4.091, 82, 31.5\u00B0, 107", 2, 220);
+  text("5, 100, 45\u00B0, 111.2", 2, 100);
+  text("Voltage, Humidity, Temperature, Pressure", 2, 65);
+  
 
   //Time (Seconds)
   textSize(16);
@@ -91,25 +95,32 @@ void draw() {
   text("-40", 210, 755);
 
   //Graph Name
-  textSize(15);
+  textSize(19);
   text("Outdoor Weather", 300, 30);
 
   //Graph Legend
-  textSize(15);
+  textSize(20);
   text("Graph Legend:", 825, 70);
+  fill(255, 112, 66);
+  text("Voltage (V)", 840, 100);
   fill(109, 207, 71); 
-  text("Humidity", 840, 100);
+  text("Humidity (%)" , 840, 130);
   fill(109, 41, 71); 
-  text("Temperature", 830, 130);
+  text("Temperature (C)", 840, 160);
   fill(37, 87, 223); 
-  text("Pressure", 840, 160);
+  text("Pressure (kPa)", 840, 190);
 
   //Data
   fill(115, 115, 115);
-  textSize(14);
-  text("Humidity:" + " " + Humidity + "%", 800, 400);
-  text("Temperature:" + " " + Temperature + "\u00B0C", 800, 430);
-  text("Pressure:" + " " + Pressure + "kPa", 800, 460);
+  textSize(25);
+  fill(255, 112, 66);
+  text("Voltage:" + " "  + Battery_voltage + "V", 750, 400);
+  fill(109, 207, 71); 
+  text("Humidity:" + " " + Humidity + "%", 750, 430);
+  fill(109, 41, 71); 
+  text("Temperature:" + " " + Temperature + "\u00B0C", 750, 460);
+  fill(37, 87, 223); 
+  text("Pressure:" + " " + Pressure + "kPa", 750, 490);
 
   //Grid Lines
   for (int i = 0 ;i<=width/18.75;i++)
@@ -119,6 +130,26 @@ void draw() {
     line((-frameCount%20)+i*20-450, 100, (-frameCount%20)+i*20-450, height);
     line(0, i*20+100, width-400, i*20+100);
     }
+   
+   //Voltage Line 
+  //(0V to 5V)
+  float var_scale_v = map(Battery_voltage, 0, 5, 768, 100); //Scale Battery_voltage values for the y-axis of the graph 
+  noFill();
+  stroke(255, 112, 66);
+  strokeWeight(5);
+  if (dataCount > 4) //After first set of invalid data, start graphing
+    {
+    beginShape(); 
+    for (int i = 0; i<Battery_voltage_array.length;i++)
+      {
+        vertex(i, Battery_voltage_array[i]);  
+      }
+    endShape();
+    for (int i = 1; i<Battery_voltage_array.length;i++)
+      {
+        Battery_voltage_array[i-1] = Battery_voltage_array[i]; //New array value will be the one after it  
+      }
+    Battery_voltage_array[Battery_voltage_array.length-1]= int(var_scale_v); //set last value to scaled value of Humidity
     
   //Humidity Line 
   //(0% to 100%)
@@ -126,9 +157,7 @@ void draw() {
   noFill();
   stroke(109, 207, 71);
   strokeWeight(5);
-  if (dataCount > 3) //After first set of invalid data, start graphing
-    {
-    beginShape(); 
+  beginShape(); 
     for (int i = 0; i<Humidity_array.length;i++)
       {
         vertex(i, Humidity_array[i]);  
@@ -175,7 +204,7 @@ void draw() {
       Pressure_array[i-1] = Pressure_array[i];
     }
     Pressure_array[Pressure_array.length-1]=int(var_scale_p); 
-    loopCount ++; 
+     
   }
 }
 
