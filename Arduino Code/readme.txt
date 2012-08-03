@@ -1,11 +1,5 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww9000\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+This is the code that will be loaded on to the Stalker Board
+ 
+In order for Arduino to recognize the Stalker Board, one should install the drivers
 
-\f0\fs24 \cf0 This is the code that will be loaded on to the Stalker Board\
- \
-In order for Arduino to recognize the Stalker Board, one should install the drivers\
-\
-After the drivers are installed, then Arduino will recognize the Stalker Board }
+After the drivers are installed, then Arduino will recognize the Stalker Board 
