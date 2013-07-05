@@ -19,8 +19,6 @@
 // PUBLIC
 //
 
-
-
 // return values:
 //  0 : OK
 // -1 : checksum error
