@@ -15,7 +15,7 @@
 // inspired by DHT11 library
 //
 
-#include "dht.h"
+#include "DHT22.h"
 
 #define TIMEOUT 10000
 
