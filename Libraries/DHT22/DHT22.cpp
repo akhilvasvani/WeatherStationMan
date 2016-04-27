@@ -1,5 +1,5 @@
 //
-//    FILE: dht.cpp
+//    FILE: DHT22.cpp
 // VERSION: 0.1.05
 // PURPOSE: DHT Temperature & Humidity Sensor library for Arduino
 //
