@@ -9,8 +9,8 @@
 // see dht.cpp file
 // 
 
-#ifndef dht_h
-#define dht_h
+#ifndef DHT22_h
+#define DHT22_h
 
 #if ARDUINO < 100
 #include <WProgram.h>
